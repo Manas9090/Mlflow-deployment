@@ -1,1 +1,34 @@
+name: Drift Detection Monitor
+
+on:
+  schedule:
+    - cron: "0 7 * * *"  # Runs every day at 7 AM UTC
+  workflow_dispatch:
+
+jobs:
+  drift-monitor:
+    runs-on: ubuntu-latest
+
+    env:
+      EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Replace Email Password in Script
+        run: |
+          sed -i "s/your_app_password_here/$EMAIL_PASS/" email_utils.py
+
+      - name: Run Drift Monitoring Script
+        run: python drift_monitor.py
 
