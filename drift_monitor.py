@@ -5,7 +5,7 @@ from scipy.stats import ks_2samp
 from datetime import datetime
 import seaborn as sns
 import matplotlib.pyplot as plt
-from your_email_module import send_email_alert  # make sure it's in same dir
+from email_utils import send_email_alert  # ✅ Correct
 
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("drift-monitoring")
